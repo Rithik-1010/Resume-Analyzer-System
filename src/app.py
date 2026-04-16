@@ -7,10 +7,6 @@ Color palette: #2B2F36 · #404754 · #5D6675 · #8A919C · #CFD3D8
 
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
-from wordcloud import WordCloud
 import re
 import os
 import warnings
@@ -89,18 +85,19 @@ st.set_page_config(
 )
 
 # ── Global CSS ─────────────────────────────────────────────────────────────────
-def load_css():
+@st.cache_data
+def get_css():
     css_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'style.css')
     with open(css_path) as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+        return f.read()
 
-load_css()
+st.markdown(f'<style>{get_css()}</style>', unsafe_allow_html=True)
 
 
 # ── Helper: styled plotly chart ────────────────────────────────────────────────
 def _chart(fig):
     fig.update_layout(**LAYOUT)
-    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
+    st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
 
 def _metric(label, value):
@@ -207,6 +204,7 @@ class ResumeApp:
         )
 
         _section("Category distribution")
+        import plotly.express as px
         cat_counts = df['Category'].value_counts().reset_index()
         cat_counts.columns = ['Category', 'Count']
         fig = px.bar(
@@ -219,6 +217,7 @@ class ResumeApp:
         st.plotly_chart(fig, use_container_width=True, config={"displayModeBar": False})
 
         _section("Resume length distribution")
+        import plotly.graph_objects as go
         lengths = df['Resume_str'].str.len().dropna()
         fig2 = go.Figure(go.Histogram(
             x=lengths, nbinsx=40,
@@ -241,6 +240,7 @@ class ResumeApp:
 
         # Skill type breakdown
         _section("Skill type breakdown")
+        import plotly.express as px
         type_counts = skill_df['skill_type'].value_counts().reset_index()
         type_counts.columns = ['Type', 'Count']
         fig = px.bar(type_counts, x='Type', y='Count', color='Type', color_discrete_sequence=CHART_COLORS)
@@ -269,6 +269,7 @@ class ResumeApp:
 
         # Heatmap: categories × skill types
         _section("Category × skill type heatmap")
+        import plotly.graph_objects as go
         top_cats = skill_df['Category'].value_counts().head(12).index
         heat_data = skill_df[skill_df['Category'].isin(top_cats)]
         pivot = heat_data.groupby(['Category', 'skill_type']).size().reset_index(name='n')
@@ -302,6 +303,9 @@ class ResumeApp:
             )
         with col2:
             max_words = st.slider("Max words", 30, 200, 80, key="wc_maxwords")
+
+        from wordcloud import WordCloud
+        import matplotlib.pyplot as plt
 
         corpus = skill_df if skill_type == "All" else skill_df[skill_df['skill_type'] == skill_type]
         text = ' '.join(corpus['skill'].tolist())
