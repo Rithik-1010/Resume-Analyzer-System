@@ -70,12 +70,16 @@ class ResumeAnalyzer:
         if not isinstance(text, str):
             return ""
         text = text.lower()
-        text = re.sub(r'[^a-z\s]', ' ', text)
         return re.sub(r'\s+', ' ', text).strip()
 
     def extract_skills_vectorized(self, texts):
         """Vectorized skill extraction for efficiency."""
         skill_data = []
+
+        # Pre-compile patterns
+        compiled_patterns = {}
+        for category, keywords in self.skill_keywords.items():
+            compiled_patterns[category] = {kw: re.compile(r'(?<![a-z0-9])' + re.escape(kw) + r'(?![a-z0-9])') for kw in keywords}
 
         for idx, text in enumerate(texts):
             text_clean = self.preprocess_text(text)
@@ -83,7 +87,7 @@ class ResumeAnalyzer:
 
             for category, keywords in self.skill_keywords.items():
                 for keyword in keywords:
-                    if keyword in text_clean:
+                    if compiled_patterns[category][keyword].search(text_clean):
                         found_skills[category].append(keyword)
 
             # Only add if skills found

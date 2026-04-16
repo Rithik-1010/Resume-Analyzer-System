@@ -1,54 +1,69 @@
 /* ---- Google Font ---- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
 
 /* ---- Color Variables ---- */
 :root {
-  --c0: #2B2F36;
-  --c1: #404754;
-  --c2: #5D6675;
-  --c3: #8A919C;
-  --c4: #CFD3D8;
+  --c0: #243A5E;   /* Midnight Blue – primary bg */
+  --c1: #5F86A6;   /* Dusty Denim – secondary bg */
+  --c2: #9FB6D8;   /* Calm Ocean – accent / borders */
+  --c3: #CFE3F1;   /* Powder Sky – muted text */
+  --c4: #EDF4FA;   /* Cloud Blue – primary text */
+
+  /* Glassmorphism tokens */
+  --glass-bg: rgba(95, 134, 166, 0.18);
+  --glass-border: rgba(207, 227, 241, 0.22);
+  --glass-blur: blur(14px);
+  --glass-shadow: 0 4px 28px rgba(36, 58, 94, 0.35);
 }
 
 /* ---- Root overrides ---- */
 html, body, [class*="css"] {
-  font-family: 'Inter', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background-color: var(--c0);
   color: var(--c4);
 }
 
 /* ---- App container ---- */
 .stApp {
-  background-color: var(--c0);
+  background: linear-gradient(145deg, #1a2f50 0%, #243A5E 55%, #2e4a6e 100%);
+  background-attachment: fixed;
 }
 
 /* ---- Sidebar ---- */
 [data-testid="stSidebar"] {
-  background-color: var(--c1);
-  border-right: 1px solid var(--c2);
+  background: rgba(36, 58, 94, 0.72);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--glass-border);
+  box-shadow: 4px 0 20px rgba(36, 58, 94, 0.4);
 }
 [data-testid="stSidebar"] * {
   color: var(--c4) !important;
 }
 [data-testid="stSidebar"] .stButton > button {
   width: 100%;
-  background-color: var(--c2);
+  background: rgba(159, 182, 216, 0.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   color: var(--c4);
-  border: none;
-  border-radius: 4px;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
   padding: 0.55rem 1rem;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  transition: background 0.22s, border-color 0.22s, box-shadow 0.22s;
   cursor: pointer;
 }
 [data-testid="stSidebar"] .stButton > button:hover {
-  background-color: var(--c3);
-  color: var(--c0);
+  background: rgba(207, 227, 241, 0.28);
+  border-color: var(--c3);
+  box-shadow: 0 2px 12px rgba(159, 182, 216, 0.25);
+  color: var(--c4);
 }
 
-/* ---- Metric cards ---- */
+/* ---- Metric cards (glassmorphism) ---- */
 .metric-row {
   display: flex;
   gap: 1rem;
@@ -57,11 +72,19 @@ html, body, [class*="css"] {
 }
 .metric-box {
   flex: 1 1 120px;
-  background: var(--c1);
-  border: 1px solid var(--c2);
-  border-radius: 6px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
   padding: 1.1rem 1.4rem;
   min-width: 120px;
+  box-shadow: var(--glass-shadow);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.metric-box:hover {
+  box-shadow: 0 6px 36px rgba(159, 182, 216, 0.22);
+  transform: translateY(-1px);
 }
 .metric-label {
   font-size: 0.72rem;
@@ -85,7 +108,7 @@ html, body, [class*="css"] {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--c3);
-  border-bottom: 1px solid var(--c2);
+  border-bottom: 1px solid rgba(207, 227, 241, 0.25);
   padding-bottom: 0.4rem;
   margin: 1.6rem 0 1rem;
 }
@@ -114,7 +137,7 @@ html, body, [class*="css"] {
 }
 .sidebar-divider {
   border: none;
-  border-top: 1px solid var(--c2);
+  border-top: 1px solid rgba(207, 227, 241, 0.2);
   margin: 1rem 0;
 }
 .sidebar-stat {
@@ -136,26 +159,87 @@ html, body, [class*="css"] {
   background: transparent;
   border: none;
   padding: 0.5rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: color 0.18s;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
   color: var(--c4);
-  border-bottom: 2px solid var(--c4);
+  border-bottom: 2px solid var(--c2);
 }
 
 /* ---- Inputs ---- */
 .stTextInput input, .stSelectbox > div > div, .stSlider {
-  background-color: var(--c1) !important;
-  border: 1px solid var(--c2) !important;
+  background: rgba(95, 134, 166, 0.22) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border) !important;
   color: var(--c4) !important;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
-/* ---- Expanders ---- */
+/* Force typed text colour in all text inputs */
+.stTextInput > div > div > input,
+.stTextInput > div > div > input:focus,
+.stTextInput > div > div > input::placeholder,
+input[type="text"],
+input[type="search"],
+input[type="number"] {
+  color: var(--c4) !important;
+  -webkit-text-fill-color: var(--c4) !important;
+  background: rgba(36, 58, 94, 0.65) !important;
+  caret-color: var(--c4) !important;
+}
+
+/* Number input box */
+.stNumberInput > div > div > input {
+  color: var(--c4) !important;
+  -webkit-text-fill-color: var(--c4) !important;
+  background: rgba(36, 58, 94, 0.65) !important;
+  caret-color: var(--c4) !important;
+}
+
+/* ---- Widget labels (make visible on dark bg) ---- */
+[data-testid="stWidgetLabel"],
+[data-testid="stWidgetLabel"] p,
+[data-testid="stWidgetLabel"] label,
+.stSelectbox label,
+.stTextInput label,
+.stSlider label,
+.stNumberInput label,
+.stFileUploader label,
+.stSlider [data-testid="stWidgetLabel"],
+.stSelectbox [data-testid="stWidgetLabel"],
+.stFileUploader [data-testid="stWidgetLabel"],
+label[data-testid="stWidgetLabel"],
+div[data-testid="stFileUploader"] label,
+div[data-testid="stFileUploader"] span {
+  color: var(--c4) !important;
+  font-weight: 500 !important;
+  font-size: 0.85rem !important;
+  opacity: 1 !important;
+}
+
+/* Slider tick labels and value */
+.stSlider [data-testid="stTickBarMin"],
+.stSlider [data-testid="stTickBarMax"],
+.stSlider span {
+  color: var(--c3) !important;
+}
+
+/* Number input label */
+.stNumberInput [data-testid="stWidgetLabel"] p {
+  color: var(--c4) !important;
+}
+
+/* ---- Expanders (glassmorphism) ---- */
 [data-testid="stExpander"] {
-  background-color: var(--c1);
-  border: 1px solid var(--c2);
-  border-radius: 6px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
   margin-bottom: 0.6rem;
+  box-shadow: var(--glass-shadow);
 }
 [data-testid="stExpander"] summary {
   font-size: 0.84rem;
@@ -163,10 +247,65 @@ html, body, [class*="css"] {
   font-weight: 500;
 }
 
+/* Expander inner content — ensure all text is clearly visible */
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] * {
+  color: var(--c4) !important;
+}
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] .sidebar-stat {
+  color: var(--c3) !important;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] caption,
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] small,
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] [data-testid="stCaptionContainer"],
+[data-testid="stExpander"] [data-testid="stExpanderDetails"] [data-testid="stCaptionContainer"] p {
+  color: var(--c4) !important;
+  opacity: 1 !important;
+  font-size: 0.85rem !important;
+}
+
+/* ---- File uploader ---- */
+[data-testid="stFileUploader"] {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px dashed var(--c2);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+/* File uploader drop-zone inner text → navy so it reads on the light zone */
+[data-testid="stFileUploader"] section {
+  background: rgba(237, 244, 250, 0.92);
+  border-radius: 10px;
+}
+[data-testid="stFileUploader"] section p,
+[data-testid="stFileUploader"] section span,
+[data-testid="stFileUploader"] section small,
+[data-testid="stFileUploader"] section button,
+[data-testid="stFileUploader"] section label {
+  color: #243A5E !important;
+  font-weight: 500;
+}
+[data-testid="stFileUploader"] section button {
+  background: rgba(95, 134, 166, 0.25) !important;
+  border: 1px solid #9FB6D8 !important;
+  border-radius: 6px;
+}
+[data-testid="stFileUploader"] section button:hover {
+  background: rgba(95, 134, 166, 0.45) !important;
+}
+
 /* ---- Status / alerts ---- */
 .stSuccess, .stInfo, .stWarning, .stError {
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 0.82rem;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 /* ---- Result count ---- */
@@ -188,7 +327,7 @@ html, body, [class*="css"] {
 /* ── Mobile breakpoints ── */
 @media (max-width: 768px) {
   .metric-row { gap: 0.6rem; }
-  .metric-box { padding: 0.8rem 1rem; }
+  .metric-box { padding: 0.8rem 1rem; border-radius: 8px; }
   .metric-value { font-size: 1.4rem; }
   .page-header { font-size: 1.1rem; }
 }
