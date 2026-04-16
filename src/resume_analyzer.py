@@ -123,13 +123,13 @@ class ResumeAnalyzer:
 
         # 1. Top skills
         top_skills = self.skill_df['skill'].value_counts().head(15)
-        top_skills.plot(kind='barh', ax=axes[0,0], color='skyblue')
+        top_skills.plot(kind='barh', ax=axes[0,0], color='#FF4B4B')
         axes[0,0].set_title('Top 15 Skills')
         axes[0,0].set_xlabel('Frequency')
 
         # 2. Skill types distribution
         skill_types = self.skill_df['skill_type'].value_counts()
-        skill_types.plot(kind='pie', ax=axes[0,1], autopct='%1.1f%%')
+        skill_types.plot(kind='pie', ax=axes[0,1], autopct='%1.1f%%', colors=["#00C4EB", "#FFB142", "#A66CFF", "#FF7CA8"])
         axes[0,1].set_title('Skill Types Distribution')
         axes[0,1].set_ylabel('')
 
@@ -137,13 +137,13 @@ class ResumeAnalyzer:
         top_cats = self.skill_df['category'].value_counts().head(5).index
         cat_data = self.skill_df[self.skill_df['category'].isin(top_cats)]
         pivot = pd.crosstab(cat_data['category'], cat_data['skill_type'])
-        pivot.plot(kind='bar', ax=axes[1,0], stacked=True)
+        pivot.plot(kind='bar', ax=axes[1,0], stacked=True, colormap='Set2')
         axes[1,0].set_title('Skills by Top Categories')
         axes[1,0].tick_params(axis='x', rotation=45)
 
         # 4. Category distribution
         cat_counts = self.df['Category'].value_counts().head(10)
-        cat_counts.plot(kind='bar', ax=axes[1,1], color='lightgreen')
+        cat_counts.plot(kind='bar', ax=axes[1,1], color='#00D280')
         axes[1,1].set_title('Resume Categories')
         axes[1,1].tick_params(axis='x', rotation=45)
 
@@ -167,20 +167,20 @@ class ResumeAnalyzer:
         )
 
         # Categories
-        fig.add_trace(go.Bar(x=cat_counts.index, y=cat_counts.values), row=1, col=1)
+        fig.add_trace(go.Bar(x=cat_counts.index, y=cat_counts.values, marker_color='#FF4B4B'), row=1, col=1)
 
         # Top skills
         top_skills = self.skill_df['skill'].value_counts().head(10)
-        fig.add_trace(go.Bar(x=top_skills.values, y=top_skills.index, orientation='h'), row=1, col=2)
+        fig.add_trace(go.Bar(x=top_skills.values, y=top_skills.index, orientation='h', marker_color='#00D280'), row=1, col=2)
 
         # Skill types
         skill_types = self.skill_df['skill_type'].value_counts()
-        fig.add_trace(go.Pie(labels=skill_types.index, values=skill_types.values), row=2, col=1)
+        fig.add_trace(go.Pie(labels=skill_types.index, values=skill_types.values, marker=dict(colors=["#00C4EB", "#FFB142", "#A66CFF", "#FF7CA8"])), row=2, col=1)
 
         # Heatmap
         heatmap_data = pd.crosstab(self.skill_df['category'], self.skill_df['skill_type'])
         fig.add_trace(go.Heatmap(z=heatmap_data.values, x=heatmap_data.columns,
-                                y=heatmap_data.index, colorscale='Blues'), row=2, col=2)
+                                y=heatmap_data.index, colorscale='Turbo'), row=2, col=2)
 
         fig.update_layout(height=800, title="Resume Analysis Dashboard")
         fig.write_html("resume_dashboard.html")
@@ -221,11 +221,7 @@ def main():
         analyzer.create_interactive_dashboard()
         analyzer.generate_report()
 
-        print("\n✅ Analysis complete!")
-
-
-if __name__ == "__main__":
-    main()
+        print("\n[OK] Analysis complete!")
 
 
 if __name__ == "__main__":

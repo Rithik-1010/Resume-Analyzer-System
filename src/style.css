@@ -1,0 +1,194 @@
+/* ---- Google Font ---- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+/* ---- Color Variables ---- */
+:root {
+  --c0: #2B2F36;
+  --c1: #404754;
+  --c2: #5D6675;
+  --c3: #8A919C;
+  --c4: #CFD3D8;
+}
+
+/* ---- Root overrides ---- */
+html, body, [class*="css"] {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--c0);
+  color: var(--c4);
+}
+
+/* ---- App container ---- */
+.stApp {
+  background-color: var(--c0);
+}
+
+/* ---- Sidebar ---- */
+[data-testid="stSidebar"] {
+  background-color: var(--c1);
+  border-right: 1px solid var(--c2);
+}
+[data-testid="stSidebar"] * {
+  color: var(--c4) !important;
+}
+[data-testid="stSidebar"] .stButton > button {
+  width: 100%;
+  background-color: var(--c2);
+  color: var(--c4);
+  border: none;
+  border-radius: 4px;
+  padding: 0.55rem 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+[data-testid="stSidebar"] .stButton > button:hover {
+  background-color: var(--c3);
+  color: var(--c0);
+}
+
+/* ---- Metric cards ---- */
+.metric-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.metric-box {
+  flex: 1 1 120px;
+  background: var(--c1);
+  border: 1px solid var(--c2);
+  border-radius: 6px;
+  padding: 1.1rem 1.4rem;
+  min-width: 120px;
+}
+.metric-label {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--c3);
+  margin-bottom: 0.35rem;
+}
+.metric-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--c4);
+  line-height: 1;
+}
+
+/* ---- Section titles ---- */
+.section-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c3);
+  border-bottom: 1px solid var(--c2);
+  padding-bottom: 0.4rem;
+  margin: 1.6rem 0 1rem;
+}
+
+/* ---- Page header ---- */
+.page-header {
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--c4);
+  margin-bottom: 0.15rem;
+  letter-spacing: -0.01em;
+}
+.page-sub {
+  font-size: 0.82rem;
+  color: var(--c3);
+  margin-bottom: 1.6rem;
+}
+
+/* ---- Sidebar brand ---- */
+.sidebar-brand {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--c4);
+  letter-spacing: 0.02em;
+  margin-bottom: 0.25rem;
+}
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid var(--c2);
+  margin: 1rem 0;
+}
+.sidebar-stat {
+  font-size: 0.78rem;
+  color: var(--c3);
+  margin: 0.3rem 0;
+}
+.sidebar-stat span {
+  color: var(--c4);
+  font-weight: 500;
+}
+
+/* ---- Tabs ---- */
+[data-testid="stTabs"] button {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  color: var(--c3);
+  background: transparent;
+  border: none;
+  padding: 0.5rem 1rem;
+}
+[data-testid="stTabs"] button[aria-selected="true"] {
+  color: var(--c4);
+  border-bottom: 2px solid var(--c4);
+}
+
+/* ---- Inputs ---- */
+.stTextInput input, .stSelectbox > div > div, .stSlider {
+  background-color: var(--c1) !important;
+  border: 1px solid var(--c2) !important;
+  color: var(--c4) !important;
+  border-radius: 4px;
+}
+
+/* ---- Expanders ---- */
+[data-testid="stExpander"] {
+  background-color: var(--c1);
+  border: 1px solid var(--c2);
+  border-radius: 6px;
+  margin-bottom: 0.6rem;
+}
+[data-testid="stExpander"] summary {
+  font-size: 0.84rem;
+  color: var(--c4);
+  font-weight: 500;
+}
+
+/* ---- Status / alerts ---- */
+.stSuccess, .stInfo, .stWarning, .stError {
+  border-radius: 4px;
+  font-size: 0.82rem;
+}
+
+/* ---- Result count ---- */
+.result-count {
+  font-size: 0.78rem;
+  color: var(--c3);
+  margin-bottom: 0.8rem;
+}
+
+/* ---- Word cloud container ---- */
+.wc-controls {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  margin-bottom: 1rem;
+}
+
+/* ── Mobile breakpoints ── */
+@media (max-width: 768px) {
+  .metric-row { gap: 0.6rem; }
+  .metric-box { padding: 0.8rem 1rem; }
+  .metric-value { font-size: 1.4rem; }
+  .page-header { font-size: 1.1rem; }
+}
